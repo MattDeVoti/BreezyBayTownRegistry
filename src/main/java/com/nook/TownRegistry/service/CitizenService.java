@@ -22,13 +22,13 @@ public class CitizenService {
 
     public ResidentResponse create(String townId, String citizenId, Resident request) {
         validation(townId, citizenId, request);
-        //TODO: validate no duplicate
+
 
     }
 
     public ResidentResponse delete(String townId, String citizenId) {
         validation(townId, citizenId);
-
+        //TODO: implement delete method
     }
 
     public ResidentResponse get(String townId, String citizenId) {
