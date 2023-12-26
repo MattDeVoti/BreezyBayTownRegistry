@@ -1,0 +1,4 @@
+# AnimalCrossingTownRegistry
+# AnimalCrossingTownRegistry
+# AnimalCrossingTownRegistry
+# AnimalCrossingTownRegistry
