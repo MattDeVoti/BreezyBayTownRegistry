@@ -28,7 +28,7 @@ public class CitizenService {
 
     public ResidentResponse delete(String townId, String citizenId) {
         validation(townId, citizenId);
-        //TODO: implement delete method
+        //TODO: implement delete method later on
     }
 
     public ResidentResponse get(String townId, String citizenId) {
