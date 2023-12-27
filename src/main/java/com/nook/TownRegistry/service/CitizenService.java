@@ -1,5 +1,6 @@
 package com.nook.TownRegistry.service;
 
+import com.mongodb.client.result.DeleteResult;
 import com.nook.TownRegistry.exception.BadRequestException;
 import com.nook.TownRegistry.model.citizen.Citizen;
 import com.nook.TownRegistry.model.citizen.Resident;
@@ -21,14 +22,16 @@ public class CitizenService {
     private final ModelMapper modelMapper;
 
     public ResidentResponse create(String townId, String citizenId, Resident request) {
-        validation(townId, citizenId, request);
-        //TODO: validate no duplicate
-
+        Citizen citizen = validation(townId, citizenId, request);
+        citizen = citizenRepository.save(citizen);
+        log.debug("Creating citizen {} with citizenId {}", citizen.getName(), citizen.getCitizenId());
+        return modelMapper.map(citizen, ResidentResponse.class);
     }
 
-    public ResidentResponse delete(String townId, String citizenId) {
+    public void delete(String townId, String citizenId) {
         validation(townId, citizenId);
-
+        DeleteResult result = citizenRepository.removeCitizen(citizenId);
+        log.debug("Citizen deleted successfully : {}", result.wasAcknowledged());
     }
 
     public ResidentResponse get(String townId, String citizenId) {
@@ -38,11 +41,13 @@ public class CitizenService {
     }
 
     public ResidentResponse update(String townId, String citizenId, Resident request) {
-        validation(townId, citizenId, request);
-
+        Citizen citizen = validation(townId, citizenId, request);
+        citizen = citizenRepository.updateCitizen(request);
+        log.debug("Updating citizen {} with citizenId {}", citizen.getName(), citizen.getCitizenId());
+        return modelMapper.map(citizen, ResidentResponse.class);
     }
 
-    public void validation(String townId, String citizenId, Resident request){
+    public Citizen validation(String townId, String citizenId, Citizen request){
         if(townId.isBlank()){
             throw new BadRequestException("townId cannot be null");
         }
@@ -54,6 +59,7 @@ public class CitizenService {
         }
         request.setTownId(townId);
         request.setCitizenId(citizenId);
+        return request;
     }
 
     public void validation(String townId, String citizenId){

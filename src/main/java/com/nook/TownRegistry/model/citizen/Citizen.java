@@ -22,6 +22,6 @@ public class Citizen {
     Gender gender;
     Species species;
     String birthday;
-    boolean ownsVacationHome;
+    boolean vacationHomeOwner;
     CitizenType citizenType;
 }
