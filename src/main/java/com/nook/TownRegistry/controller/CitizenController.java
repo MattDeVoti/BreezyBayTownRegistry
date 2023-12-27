@@ -20,8 +20,8 @@ public class CitizenController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value="deleteResident")
-    public ResidentResponse deleteResident(@PathVariable String townId, @PathVariable String citizenId){
-        return citizenService.delete(townId, citizenId);
+    public void deleteResident(@PathVariable String townId, @PathVariable String citizenId){
+        citizenService.delete(townId, citizenId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value="getResident/{citizenId}")
