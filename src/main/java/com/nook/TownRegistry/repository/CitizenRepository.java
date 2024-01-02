@@ -6,8 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface CitizenRepository extends MongoRepository<Citizen, String> {
+public interface CitizenRepository extends MongoRepository<Citizen, String>, CitizenQuery {
     List<Citizen> findByCitizenId(String citizenId);
     List<Citizen> findByName(String name);
-    List<Citizen> findAllOfCitizenType(CitizenType citizenType);
 }

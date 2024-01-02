@@ -11,6 +11,7 @@ public interface CitizenQuery {
 
     Citizen updateCitizen(Citizen citizen);
     DeleteResult removeCitizen(String citizenId);
+//    List<Citizen> findAllOfCitizenType(CitizenType citizenType); TODO: Implement
 
 
 }
