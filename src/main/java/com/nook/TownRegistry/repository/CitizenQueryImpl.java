@@ -9,12 +9,12 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
-public class CitizenRepositoryImpl implements CitizenRepository{
+public class CitizenQueryImpl implements CitizenQuery {
 
     private final MongoTemplate mongoTemplate;
 
     @Autowired
-    public CitizenRepositoryImpl(MongoTemplate mongoTemplate){
+    public CitizenQueryImpl(MongoTemplate mongoTemplate){
         this.mongoTemplate = mongoTemplate;
     }
 
