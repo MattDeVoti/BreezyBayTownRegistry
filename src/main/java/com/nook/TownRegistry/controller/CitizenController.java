@@ -1,5 +1,6 @@
 package com.nook.TownRegistry.controller;
 
+import com.mongodb.client.result.DeleteResult;
 import com.nook.TownRegistry.model.citizen.Resident;
 import com.nook.TownRegistry.model.citizen.ResidentResponse;
 import com.nook.TownRegistry.service.CitizenService;
@@ -19,9 +20,9 @@ public class CitizenController {
         return citizenService.create(townId, citizenId, request);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value="deleteResident")
-    public void deleteResident(@PathVariable String townId, @PathVariable String citizenId){
-        citizenService.delete(townId, citizenId);
+    @RequestMapping(method = RequestMethod.DELETE, value="deleteResident/{citizenId}")
+    public DeleteResult deleteResident(@PathVariable String townId, @PathVariable String citizenId){
+        return citizenService.delete(townId, citizenId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value="getResident/{citizenId}")

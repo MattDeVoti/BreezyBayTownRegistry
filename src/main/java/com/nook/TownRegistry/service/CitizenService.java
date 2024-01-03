@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class CitizenService {
 
     private final CitizenRepository citizenRepository;
@@ -28,16 +28,17 @@ public class CitizenService {
         return modelMapper.map(citizen, ResidentResponse.class);
     }
 
-    public void delete(String townId, String citizenId) {
+    public DeleteResult delete(String townId, String citizenId) {
         validation(townId, citizenId);
         DeleteResult result = citizenRepository.removeCitizen(citizenId);
         log.debug("Citizen deleted successfully : {}", result.wasAcknowledged());
+        return result;
     }
 
     public ResidentResponse get(String townId, String citizenId) {
         validation(townId, citizenId);
         List<Citizen> citizen = citizenRepository.findByCitizenId(citizenId);
-        return modelMapper.map(citizen, ResidentResponse.class);
+        return modelMapper.map(citizen.get(0), ResidentResponse.class);
     }
 
     public ResidentResponse update(String townId, String citizenId, Resident request) {
