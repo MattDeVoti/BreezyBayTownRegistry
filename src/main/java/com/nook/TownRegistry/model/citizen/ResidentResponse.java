@@ -13,7 +13,7 @@ public class ResidentResponse {
     private Gender gender;
     private Species species;
     private String birthday;
-    private boolean ownsVacationHome;
+    private boolean vacationHomeOwner;
     private String personality;
     private Song favoriteSong;
 }
