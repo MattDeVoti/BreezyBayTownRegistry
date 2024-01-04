@@ -4,7 +4,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.nook.TownRegistry.exception.BadRequestException;
 import com.nook.TownRegistry.model.citizen.Citizen;
 import com.nook.TownRegistry.model.citizen.Resident;
-import com.nook.TownRegistry.model.citizen.ResidentResponse;
+import com.nook.TownRegistry.model.citizen.CitizenResponse;
 import com.nook.TownRegistry.repository.CitizenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +21,11 @@ public class CitizenService {
     private final CitizenRepository citizenRepository;
     private final ModelMapper modelMapper;
 
-    public ResidentResponse create(String townId, String citizenId, Resident request) {
+    public CitizenResponse create(String townId, String citizenId, Citizen request) {
         Citizen citizen = validation(townId, citizenId, request);
         citizen = citizenRepository.save(citizen);
         log.debug("Creating citizen {} with citizenId {}", citizen.getName(), citizen.getCitizenId());
-        return modelMapper.map(citizen, ResidentResponse.class);
+        return modelMapper.map(citizen, CitizenResponse.class);
     }
 
     public DeleteResult delete(String townId, String citizenId) {
@@ -35,17 +35,17 @@ public class CitizenService {
         return result;
     }
 
-    public ResidentResponse get(String townId, String citizenId) {
+    public CitizenResponse get(String townId, String citizenId) {
         validation(townId, citizenId);
         List<Citizen> citizen = citizenRepository.findByCitizenId(citizenId);
-        return modelMapper.map(citizen.get(0), ResidentResponse.class);
+        return modelMapper.map(citizen.get(0), CitizenResponse.class);
     }
 
-    public ResidentResponse update(String townId, String citizenId, Resident request) {
+    public CitizenResponse update(String townId, String citizenId, Citizen request) {
         Citizen citizen = validation(townId, citizenId, request);
         citizen = citizenRepository.updateCitizen(request);
         log.debug("Updating citizen {} with citizenId {}", citizen.getName(), citizen.getCitizenId());
-        return modelMapper.map(citizen, ResidentResponse.class);
+        return modelMapper.map(citizen, CitizenResponse.class);
     }
 
     public Citizen validation(String townId, String citizenId, Citizen request){

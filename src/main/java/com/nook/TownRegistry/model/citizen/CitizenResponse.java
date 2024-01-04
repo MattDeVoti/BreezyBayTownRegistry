@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ResidentResponse {
+public class CitizenResponse {
     private String name;
     private Gender gender;
     private Species species;
@@ -16,4 +16,7 @@ public class ResidentResponse {
     private boolean vacationHomeOwner;
     private String personality;
     private Song favoriteSong;
+    String placeOfEmployment;
+    String jobTitle;
+    String jobDescription;
 }
