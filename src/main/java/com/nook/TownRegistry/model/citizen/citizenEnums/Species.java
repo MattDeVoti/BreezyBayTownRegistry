@@ -17,5 +17,6 @@ public enum Species {
     OSTRICH,
     ROBOT,
     NONLIVING,
-    HUMAN
+    HUMAN,
+    TANUKI
 }
