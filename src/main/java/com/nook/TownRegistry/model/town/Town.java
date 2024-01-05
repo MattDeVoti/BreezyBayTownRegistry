@@ -16,7 +16,7 @@ public class Town {
     @Id
     String townId;
 
-    String townName;
+    String name;
     GeneralStore store;
     int numberOfResidents; //TODO Increment or decriment this number as residents are added or removed
 
