@@ -1,10 +1,7 @@
 package com.nook.TownRegistry.controller;
 
 import com.mongodb.client.result.DeleteResult;
-import com.nook.TownRegistry.model.citizen.CitizenResponse;
-import com.nook.TownRegistry.model.citizen.Resident;
 import com.nook.TownRegistry.model.town.Town;
-import com.nook.TownRegistry.service.CitizenService;
 import com.nook.TownRegistry.service.TownService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

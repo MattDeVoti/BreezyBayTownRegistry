@@ -24,8 +24,9 @@ public class TownQueryImpl implements TownQuery {
     public Town updateTown(Town town) {
         Query query = new Query(where("townId").is(town.getTownId()));
         Update update = new Update();
-        update.set("generalStore", town.getStore());
+        update.set("store", town.getStore());
         update.set("numberOfResidents", town.getNumberOfResidents());
+        update.set("museum", town.getMuseum());
         return mongoTemplate.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), Town.class);
     }
 

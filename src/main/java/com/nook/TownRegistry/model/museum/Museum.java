@@ -11,8 +11,8 @@ import java.util.List;
 @Setter
 @Data
 public class Museum {
-    List<String> artPieces = new ArrayList<String>();
-    List<String> bugs = new ArrayList<String>();
-    List<String> fish = new ArrayList<String>();
-    List<String> fossils = new ArrayList<String>();
+    List<String> artPieces = new ArrayList<>();
+    List<String> bugs = new ArrayList<>();
+    List<String> fish = new ArrayList<>();
+    List<String> fossils = new ArrayList<>();
 }
