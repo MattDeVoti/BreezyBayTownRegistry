@@ -3,7 +3,6 @@ package com.nook.TownRegistry.service;
 import com.mongodb.client.result.DeleteResult;
 import com.nook.TownRegistry.exception.BadRequestException;
 import com.nook.TownRegistry.model.citizen.Citizen;
-import com.nook.TownRegistry.model.citizen.Resident;
 import com.nook.TownRegistry.model.citizen.CitizenResponse;
 import com.nook.TownRegistry.repository.CitizenRepository;
 import lombok.RequiredArgsConstructor;
