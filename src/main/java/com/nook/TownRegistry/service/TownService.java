@@ -49,6 +49,12 @@ public class TownService {
         return town;
     }
 
+    public void updateResidentCount(String townId, int i){
+        Town town = get(townId);
+        town.setNumberOfResidents((town.getNumberOfResidents()+i));
+        update(townId, town);
+    }
+
     public Town validation(String townId, Town request){
         if(townId.isBlank()){
             throw new BadRequestException("townId cannot be null");
