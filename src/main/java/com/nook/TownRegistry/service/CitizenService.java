@@ -4,6 +4,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.nook.TownRegistry.exception.BadRequestException;
 import com.nook.TownRegistry.model.citizen.Citizen;
 import com.nook.TownRegistry.model.citizen.CitizenResponse;
+import com.nook.TownRegistry.model.citizen.citizenEnums.CitizenType;
 import com.nook.TownRegistry.repository.CitizenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,17 +19,24 @@ import java.util.List;
 public class CitizenService {
 
     private final CitizenRepository citizenRepository;
+    private final TownService townService;
     private final ModelMapper modelMapper;
 
     public CitizenResponse create(String townId, String citizenId, Citizen request) {
         Citizen citizen = validation(townId, citizenId, request);
         citizen = citizenRepository.save(citizen);
+        if(request.getCitizenType().equals(CitizenType.RESIDENT)) {
+            townService.updateResidentCount(townId, 1);
+        }
         log.debug("Creating citizen {} with citizenId {}", citizen.getName(), citizen.getCitizenId());
         return modelMapper.map(citizen, CitizenResponse.class);
     }
 
     public DeleteResult delete(String townId, String citizenId) {
         validation(townId, citizenId);
+        if(citizenRepository.findByCitizenId(citizenId).get(0).getCitizenType().equals(CitizenType.RESIDENT)){
+            townService.updateResidentCount(townId, -1);
+        }
         DeleteResult result = citizenRepository.removeCitizen(citizenId);
         log.debug("Citizen deleted successfully : {}", result.wasAcknowledged());
         return result;
@@ -42,9 +50,18 @@ public class CitizenService {
 
     public CitizenResponse update(String townId, String citizenId, Citizen request) {
         Citizen citizen = validation(townId, citizenId, request);
+        updateCitizenCountOnMove(townId, citizenId);
         citizen = citizenRepository.updateCitizen(request);
         log.debug("Updating citizen {} with citizenId {}", citizen.getName(), citizen.getCitizenId());
         return modelMapper.map(citizen, CitizenResponse.class);
+    }
+
+    public void updateCitizenCountOnMove(String townId, String citizenId){
+        String oldTownId = citizenRepository.findByCitizenId(citizenId).get(0).getTownId();
+        if(!townId.equals(oldTownId)){
+            townService.updateResidentCount(townId, 1);
+            townService.updateResidentCount(oldTownId, -1);
+        }
     }
 
     public Citizen validation(String townId, String citizenId, Citizen request){
