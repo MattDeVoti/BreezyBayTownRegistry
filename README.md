@@ -79,7 +79,7 @@ http://localhost:8080/api/nook/123456/registry/town/update
         "museum":{
             "artPieces":[ "Great Wave"],
             "bugs":[ "Elephant Beetle", "Stag Beetle", "Birdwing Butterfly", "Scorpion"],
-            "fish":[ "Barred Knifejaw", "Pirana", "Sturgeon"],
+            "fish":[ "Barred Knifejaw", "Piranha", "Sturgeon"],
             "fossils":[ "Ankylosaur", "T-Rex"]
     }
 
