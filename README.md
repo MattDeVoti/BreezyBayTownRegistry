@@ -7,8 +7,10 @@
 ## To Run
 
 - Run TownRegistryApplication.class
-- Run MongoDB on port 27017 (Defaul MongoDB port, no configuration needed)
+- Run MongoDB community edition (or paid if you prefer) on port 27017 (Default MongoDB port, no configuration needed)
+  - MongoDB install instructions : https://www.mongodb.com/docs/manual/installation/
 - Using postman or some similar software, control the server through API calls on localhost:8080
+  - Download Postman here : https://www.postman.com/downloads/
 
 ## API Calls
 ###
