@@ -28,7 +28,7 @@ public class CitizenController {
         return citizenService.create(townId, citizenId, request);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value="deleteResident/{citizenId}")
+    @RequestMapping(method = RequestMethod.DELETE, value="deleteCitizen/{citizenId}")
     @Operation(summary = "Remove citizen", description = "Removes a citizen from the registry by citizenId")
     public DeleteResult deleteCitizen(@PathVariable String townId, @PathVariable String citizenId){
         return citizenService.delete(townId, citizenId);
