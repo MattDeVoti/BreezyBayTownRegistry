@@ -18,7 +18,7 @@ public class Town {
 
     String name;
     GeneralStore store;
-    int numberOfResidents; //TODO Increment or decriment this number as residents are added or removed
+    int numberOfResidents;
 
     Museum museum;
 }
