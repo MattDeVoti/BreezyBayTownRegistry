@@ -5,13 +5,17 @@ import com.nook.TownRegistry.exception.BadRequestException;
 import com.nook.TownRegistry.model.citizen.Citizen;
 import com.nook.TownRegistry.model.citizen.CitizenResponse;
 import com.nook.TownRegistry.model.citizen.citizenEnums.CitizenType;
+import com.nook.TownRegistry.repository.CitizenQuery;
 import com.nook.TownRegistry.repository.CitizenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -62,6 +66,15 @@ public class CitizenService {
             townService.updateResidentCount(townId, 1);
             townService.updateResidentCount(oldTownId, -1);
         }
+    }
+
+    public List<CitizenResponse> findAllOfCitizenType(CitizenType citizenType, String townId){
+        List<Citizen> citizens = citizenRepository.findAllOfCitizenType(citizenType, townId);
+        List<CitizenResponse> citizenResponses = citizens
+                .stream()
+                .map(citizen -> modelMapper.map(citizen, CitizenResponse.class))
+                .collect(Collectors.toList());
+        return citizenResponses;
     }
 
     public Citizen validation(String townId, String citizenId, Citizen request){

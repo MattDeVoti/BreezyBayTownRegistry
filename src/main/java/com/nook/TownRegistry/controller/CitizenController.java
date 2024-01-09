@@ -4,10 +4,13 @@ import com.mongodb.client.result.DeleteResult;
 import com.nook.TownRegistry.model.citizen.Employee;
 import com.nook.TownRegistry.model.citizen.Resident;
 import com.nook.TownRegistry.model.citizen.CitizenResponse;
+import com.nook.TownRegistry.model.citizen.citizenEnums.CitizenType;
 import com.nook.TownRegistry.service.CitizenService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -50,5 +53,11 @@ public class CitizenController {
     @Operation(summary = "Update existing Employee", description = "Updates an employee already in the registry by citizenId")
     public CitizenResponse updateEmployee(@PathVariable String townId, @PathVariable String citizenId, @RequestBody Employee request){
         return citizenService.update(townId, citizenId, request);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value="getAllOfCitizenType/{citizenType}")
+    @Operation(summary = "Get all citizens of type in town", description = "Retrieves information on all citizens of the specified type within a town.")
+    public List<CitizenResponse> getAllOfCitizenType(@PathVariable String townId, @PathVariable CitizenType citizenType){
+        return citizenService.findAllOfCitizenType(citizenType, townId);
     }
 }
