@@ -42,6 +42,10 @@ http://localhost:8080/api/nook/123456/registry/town/get
 http://localhost:8080/api/nook/123456/registry/town/delete
 #### Update Town (Requires town payload)
 http://localhost:8080/api/nook/123456/registry/town/update
+###
+### Get list of all citizens in a town based on citizen type (EMPLOYEE or RESIDENT)
+###### Best if multiple residents or multiple employees have been created using the Create Resident or Create Employee API
+http://localhost:8080/api/nook/123456/registry/citizen/getAllOfCitizenType/RESIDENT
 
 ## Sample API Payloads
 ### Default Resident Payload
