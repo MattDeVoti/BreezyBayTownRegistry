@@ -24,14 +24,20 @@ public class TownService {
 
     public Town create(String townId, Town request){
         Town town = validation(townId, request);
+
+        // Saves new town to MongoDB
         town = townRepository.save(town);
+
         log.debug("Creating citizen {} with citizenId {}", town.getName(), town.getTownId());
         return town;
     }
 
     public DeleteResult delete(String townId) {
         validation(townId);
+
+        // Removes town from MongoDB
         DeleteResult result = townRepository.removeTown(townId);
+
         log.debug("Town deleted successfully : {}", result.wasAcknowledged());
         return result;
     }
@@ -49,6 +55,7 @@ public class TownService {
         return town;
     }
 
+    // Typically called when a resident is created, destroyed or updated
     public void updateResidentCount(String townId, int i){
         Town town = get(townId);
         town.setNumberOfResidents((town.getNumberOfResidents()+i));
