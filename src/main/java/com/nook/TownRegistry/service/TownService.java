@@ -2,14 +2,10 @@ package com.nook.TownRegistry.service;
 
 import com.mongodb.client.result.DeleteResult;
 import com.nook.TownRegistry.exception.BadRequestException;
-import com.nook.TownRegistry.model.citizen.Citizen;
-import com.nook.TownRegistry.model.citizen.CitizenResponse;
 import com.nook.TownRegistry.model.town.Town;
-import com.nook.TownRegistry.repository.CitizenRepository;
 import com.nook.TownRegistry.repository.TownRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +16,6 @@ import java.util.List;
 public class TownService {
 
     private final TownRepository townRepository;
-    private final ModelMapper modelMapper;
 
     public Town create(String townId, Town request){
         Town town = validation(townId, request);
