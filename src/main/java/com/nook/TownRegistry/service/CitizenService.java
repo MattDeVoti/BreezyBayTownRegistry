@@ -5,15 +5,12 @@ import com.nook.TownRegistry.exception.BadRequestException;
 import com.nook.TownRegistry.model.citizen.Citizen;
 import com.nook.TownRegistry.model.citizen.CitizenResponse;
 import com.nook.TownRegistry.model.citizen.citizenEnums.CitizenType;
-import com.nook.TownRegistry.repository.CitizenQuery;
 import com.nook.TownRegistry.repository.CitizenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
