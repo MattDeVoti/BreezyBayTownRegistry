@@ -26,21 +26,32 @@ public class CitizenService {
     private final TownService townService;
     private final ModelMapper modelMapper;
 
+    // Handles the creation of a new citizen (can be a resident or an employee)
     public CitizenResponse create(String townId, String citizenId, Citizen request) {
         Citizen citizen = validation(townId, citizenId, request);
+
+        // Saves new citizen to MongoDB
         citizen = citizenRepository.save(citizen);
+
+        // Makes sure to increase the town's resident count by 1 when a new resident is created for this town
+        // Employees are not considered residents and so we skip this step if the citizen type is an employee
         if(request.getCitizenType().equals(CitizenType.RESIDENT)) {
             townService.updateResidentCount(townId, 1);
         }
+
         log.debug("Creating citizen {} with citizenId {}", citizen.getName(), citizen.getCitizenId());
         return modelMapper.map(citizen, CitizenResponse.class);
     }
 
     public DeleteResult delete(String townId, String citizenId) {
         validation(townId, citizenId);
+
+        // Makes sure to decrease the town's resident count by 1 when a new resident is removed from this town
+        // Employees are not considered residents and so we skip this step if the citizen type is an employee
         if(citizenRepository.findByCitizenId(citizenId).get(0).getCitizenType().equals(CitizenType.RESIDENT)){
             townService.updateResidentCount(townId, -1);
         }
+
         DeleteResult result = citizenRepository.removeCitizen(citizenId);
         log.debug("Citizen deleted successfully : {}", result.wasAcknowledged());
         return result;
@@ -54,7 +65,14 @@ public class CitizenService {
 
     public CitizenResponse update(String townId, String citizenId, Citizen request) {
         Citizen citizen = validation(townId, citizenId, request);
-        updateCitizenCountOnMove(townId, citizenId);
+
+        // Makes sure to increase the new town's resident count by 1 and decrease the old town's resident count
+        // by 1 when a new resident is updated and moved from one town to another
+        // Employees are not considered residents and so we skip this step if the citizen type is an employee
+        if(request.getCitizenType().equals(CitizenType.RESIDENT)) {
+            updateCitizenCountOnMove(townId, citizenId);
+        }
+
         citizen = citizenRepository.updateCitizen(request);
         log.debug("Updating citizen {} with citizenId {}", citizen.getName(), citizen.getCitizenId());
         return modelMapper.map(citizen, CitizenResponse.class);
@@ -62,12 +80,14 @@ public class CitizenService {
 
     public void updateCitizenCountOnMove(String townId, String citizenId){
         String oldTownId = citizenRepository.findByCitizenId(citizenId).get(0).getTownId();
+
         if(!townId.equals(oldTownId)){
             townService.updateResidentCount(townId, 1);
             townService.updateResidentCount(oldTownId, -1);
         }
     }
 
+    // Retrieves a list of all residents or employees in a given town based on citizen type (resident or employee)
     public List<CitizenResponse> findAllOfCitizenType(CitizenType citizenType, String townId){
         List<Citizen> citizens = citizenRepository.findAllOfCitizenType(citizenType, townId);
         List<CitizenResponse> citizenResponses = citizens
