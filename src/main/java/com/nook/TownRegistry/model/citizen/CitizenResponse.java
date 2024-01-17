@@ -1,5 +1,6 @@
 package com.nook.TownRegistry.model.citizen;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nook.TownRegistry.model.citizen.citizenEnums.Gender;
 import com.nook.TownRegistry.model.citizen.citizenEnums.Species;
 import com.nook.TownRegistry.model.songs.Song;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CitizenResponse {
     private String name;
     private Gender gender;

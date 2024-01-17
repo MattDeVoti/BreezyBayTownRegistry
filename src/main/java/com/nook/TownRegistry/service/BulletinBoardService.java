@@ -7,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.security.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,26 +20,25 @@ public class BulletinBoardService {
     private final BulletinBoardRepository bulletinBoardRepository;
 
 
-    public BulletinBoardPost create(String townId, String citizenId, String message) {
-        BulletinBoardPost bulletinBoardPost = buildPost(townId, citizenId, message);
+    public BulletinBoardPost create(String townId, String citizenId, String messageId, String message) {
+        BulletinBoardPost bulletinBoardPost = buildPost(townId, citizenId, messageId, message);
         bulletinBoardPost = bulletinBoardRepository.save(bulletinBoardPost);
         return bulletinBoardPost;
     }
 
-    public List<BulletinBoardPost> get(String townId, String citizenId){
+    public List<BulletinBoardPost> getByCitizen(String townId, String citizenId){
         validation(townId, citizenId);
         List<BulletinBoardPost> bulletinBoardPosts = bulletinBoardRepository.findByTownIdAndCitizenId(townId, citizenId);
         return  bulletinBoardPosts;
     }
 
-    public BulletinBoardPost buildPost(String townId, String citizenId, String message){
+    public BulletinBoardPost buildPost(String townId, String citizenId, String messageId, String message){
         String townName = townService.get(townId).getName();
         String citizenName = citizenService.get(townId, citizenId).getName();
-        validation(townId, citizenId, message, townName, citizenName);
+        validation(messageId, townId, citizenId, message, townName, citizenName);
 
         message = messageBuilder(townName, citizenName,message);
-        BulletinBoardPost bulletinBoardPost = new BulletinBoardPost(townId, citizenId, message, townName, citizenName);
-        bulletinBoardPost.populateCreatedAt();
+        BulletinBoardPost bulletinBoardPost = new BulletinBoardPost(messageId, townId, citizenId, message, townName, citizenName, currentDateTime());
         return bulletinBoardPost;
     }
 
@@ -52,15 +49,17 @@ public class BulletinBoardService {
         return (header + message + footer);
     }
 
-//    public Date currentDateTime(){
-////        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-//        Date now  = new Date(System.currentTimeMillis());
-//        return now;
-//    }
+    public LocalDateTime currentDateTime(){
+        LocalDateTime now = LocalDateTime.now();
+        return now;
+    }
 
-    public void validation(String townId, String citizenId, String message, String townName, String citizenName){
+    public void validation(String messageId, String townId, String citizenId, String message, String townName, String citizenName){
         if(message.length()>1000){
             throw new BadRequestException("Bulletin message too long (cannot be longer than 1000 characters)");
+        }
+        if(messageId.isBlank()){
+            throw new BadRequestException("MessageId cannot be blank");
         }
         if(message.isBlank()){
             throw new BadRequestException("No message contained in post");

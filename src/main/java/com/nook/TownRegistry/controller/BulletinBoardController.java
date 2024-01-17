@@ -6,25 +6,24 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/nook/{townId}/bulletinBoard")
+@RequestMapping("/api/nook/{townId}/{citizenId}/bulletinBoard")
 public class BulletinBoardController {
 
     private final BulletinBoardService bulletinBoardService;
 
-    @RequestMapping(method = RequestMethod.POST, value="createMessage/{citizenId}")
+    @RequestMapping(method = RequestMethod.POST, value="createMessage/{messageId}")
     @Operation(summary = "Create new message", description = "Creates a new message for the bulletin board")
-    public BulletinBoardPost createBulletinPost(@PathVariable String townId, @PathVariable String citizenId, @RequestBody String message){
-        return bulletinBoardService.create(townId, citizenId, message);
+    public BulletinBoardPost createBulletinPost(@PathVariable String townId, @PathVariable String citizenId, @PathVariable String messageId, @RequestBody String message){
+        return bulletinBoardService.create(townId, citizenId, messageId, message);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="getMessages/{citizenId}")
+    @RequestMapping(method = RequestMethod.GET, value="getMessages/{messageId}")
     @Operation(summary = "Retrieve message", description = "Retrieve a bulletin board message.")
-    public List<BulletinBoardPost> getBulletinPost(@PathVariable String townId, @PathVariable String citizenId){
-        return bulletinBoardService.get(townId, citizenId);
+    public List<BulletinBoardPost> getBulletinPostsByCitizen(@PathVariable String townId, @PathVariable String citizenId, @PathVariable String messageId){
+        return bulletinBoardService.getByCitizen(townId, citizenId);
     }
 }
