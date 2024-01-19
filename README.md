@@ -46,9 +46,18 @@ http://localhost:8080/api/nook/123456/registry/town/update
 ### Get list of all citizens in a town based on citizen type (EMPLOYEE or RESIDENT)
 ###### Best if multiple residents or multiple employees have been created using the Create Resident or Create Employee API
 http://localhost:8080/api/nook/123456/registry/citizen/getAllOfCitizenType/RESIDENT
+###
+### Bulletin Board URL examples
+#### Create Post (Requires Bulletin Board Message Payload (example below), citizen and town should already exist)
+http://localhost:8080/api/nook/123456/bulletinBoard/createMessage/8901237654
+#### Get all posts by townId and citizenId
+http://localhost:8080/api/nook/123456/bulletinBoard/getMessages/8901237654
+#### Get a post by messageId
+http://localhost:8080/api/nook/123456/8901237654/bulletinBoard/getMessage/787878
 
+##
 ## Sample API Payloads
-### Default Resident Payload
+### Default Resident Payload (JSON Payload)
 
     {
         "name": "Frobert",
@@ -61,7 +70,7 @@ http://localhost:8080/api/nook/123456/registry/citizen/getAllOfCitizenType/RESID
         "favoriteSong": "MY_PLACE"
     }
 
-### Default Employee Payload
+### Default Employee Payload (JSON Payload)
 
     {
         "name": "Tom Nook",
@@ -74,7 +83,7 @@ http://localhost:8080/api/nook/123456/registry/citizen/getAllOfCitizenType/RESID
         "jobDescription": "Handles home upgrades and assists incoming and outgoing residents"
     }
 
-### Default Town Payload
+### Default Town Payload (JSON Payload)
     {
         "name": "Breezy Bay",
         "store": "NOOK_N_GO",
@@ -86,5 +95,6 @@ http://localhost:8080/api/nook/123456/registry/citizen/getAllOfCitizenType/RESID
             "fossils":[ "Ankylosaur", "T-Rex"]
     }
 
+### Example Bulletin Board Message (Text Payload)
 
-
+"This Saturday, I will be hosting a BBQ at my house! Come by around 2pm with an appetite!"
