@@ -21,9 +21,15 @@ public class BulletinBoardController {
         return bulletinBoardService.create(townId, citizenId, messageId, message);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="getMessages/{messageId}")
-    @Operation(summary = "Retrieve message", description = "Retrieve a bulletin board message.")
-    public List<BulletinBoardPost> getBulletinPostsByCitizen(@PathVariable String townId, @PathVariable String citizenId, @PathVariable String messageId){
+    @RequestMapping(method = RequestMethod.GET, value="getMessages")
+    @Operation(summary = "Retrieve messages by citizen", description = "Retrieve a citizen's bulletin board messages by townId and citizenId")
+    public List<BulletinBoardPost> getBulletinPostsByCitizen(@PathVariable String townId, @PathVariable String citizenId){
         return bulletinBoardService.getByCitizen(townId, citizenId);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value="getMessage/{messageId}")
+    @Operation(summary = "Retrieve message by Id", description = "Retrieve a bulletin board message by Id")
+    public BulletinBoardPost getBulletinPostsById(@PathVariable String messageId){
+        return bulletinBoardService.getById(messageId);
     }
 }

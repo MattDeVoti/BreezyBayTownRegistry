@@ -52,6 +52,10 @@ http://localhost:8080/api/nook/123456/registry/citizen/getAllOfCitizenType/RESID
 http://localhost:8080/api/nook/123456/bulletinBoard/createMessage/8901237654
 #### Get all posts by townId and citizenId
 http://localhost:8080/api/nook/123456/bulletinBoard/getMessages/8901237654
+#### Get a post by messageId
+http://localhost:8080/api/nook/123456/8901237654/bulletinBoard/getMessage/787878
+
+##
 ## Sample API Payloads
 ### Default Resident Payload (JSON Payload)
 

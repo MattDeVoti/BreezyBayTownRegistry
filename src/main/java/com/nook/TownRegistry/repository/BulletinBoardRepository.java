@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface BulletinBoardRepository extends MongoRepository<BulletinBoardPost, String> {
     List<BulletinBoardPost> findByTownIdAndCitizenId(String townId, String citizenId);
+    List<BulletinBoardPost> findByMessageId(String messageId);
 }

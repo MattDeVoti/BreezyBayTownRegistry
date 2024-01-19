@@ -20,6 +20,7 @@ public class BulletinBoardPost {
     private final String townName;
     private final String citizenName;
 
+    // TODO: Could be cool to make the amount of time configurable
     @Indexed(name = "deleteAt", expireAfterSeconds=300)
     private final LocalDateTime createdAt;
 }

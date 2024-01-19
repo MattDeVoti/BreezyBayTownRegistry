@@ -28,8 +28,12 @@ public class BulletinBoardService {
 
     public List<BulletinBoardPost> getByCitizen(String townId, String citizenId){
         validation(townId, citizenId);
-        List<BulletinBoardPost> bulletinBoardPosts = bulletinBoardRepository.findByTownIdAndCitizenId(townId, citizenId);
-        return  bulletinBoardPosts;
+        return bulletinBoardRepository.findByTownIdAndCitizenId(townId, citizenId);
+    }
+
+    public BulletinBoardPost getById(String messageId) {
+        validation(messageId);
+        return bulletinBoardRepository.findByMessageId(messageId).get(0);
     }
 
     public BulletinBoardPost buildPost(String townId, String citizenId, String messageId, String message){
@@ -38,8 +42,7 @@ public class BulletinBoardService {
         validation(messageId, townId, citizenId, message, townName, citizenName);
 
         message = messageBuilder(townName, citizenName,message);
-        BulletinBoardPost bulletinBoardPost = new BulletinBoardPost(messageId, townId, citizenId, message, townName, citizenName, currentDateTime());
-        return bulletinBoardPost;
+        return new BulletinBoardPost(messageId, townId, citizenId, message, townName, citizenName, currentDateTime());
     }
 
     public String messageBuilder(String townName, String citizenName, String message){
@@ -50,8 +53,7 @@ public class BulletinBoardService {
     }
 
     public LocalDateTime currentDateTime(){
-        LocalDateTime now = LocalDateTime.now();
-        return now;
+        return LocalDateTime.now();
     }
 
     public void validation(String messageId, String townId, String citizenId, String message, String townName, String citizenName){
@@ -78,12 +80,18 @@ public class BulletinBoardService {
         }
     }
 
-    public void validation(String townId, String citizenId){
-        if(citizenId.isBlank()){
+    public void validation(String townId, String citizenId) {
+        if (citizenId.isBlank()) {
             throw new BadRequestException("residentId cannot be null");
         }
-        if(townId.isBlank()){
+        if (townId.isBlank()) {
             throw new BadRequestException("townId cannot be null");
+        }
+    }
+
+    public void validation(String messageId) {
+        if (messageId.isBlank()) {
+            throw new BadRequestException("messageId cannot be null");
         }
     }
 }
